@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [user, setUser] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
@@ -21,6 +22,10 @@ export default function LoginPage() {
   const onLogin = async () => {
     try {
       setLoading(true);
+      const response = await axios.post("/api/users/login", user);
+      console.log("login response", response.data);
+      toast.success("Login succesdfull");
+      router.push("/profile");
     } catch (err: any) {
       console.log("Error while Login :", err);
       toast.error(err.message);
